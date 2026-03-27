@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Living Print VR - Human Heart</title>
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+</head>
+
+<body>
+
+  <a-scene>
+
+    <!-- Background -->
+    <a-sky color="#ECECEC"></a-sky>
+
+    <!-- Lighting -->
+    <a-light type="ambient" intensity="1"></a-light>
+    <a-light type="directional" position="2 4 2"></a-light>
+
+    <!-- Rotating Heart -->
+    <a-entity 
+      gltf-model="assets/models/heart.glb"
+      position="0 1.5 -3"
+      scale="1 1 1"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+    </a-entity>
+
+    <!-- Title -->
+    <a-text 
+      value="Human Heart (VR Learning)"
+      position="0 2.5 -3"
+      align="center"
+      color="black">
+    </a-text>
+
+    <!-- Description -->
+    <a-text 
+      value="The heart pumps blood throughout the body"
+      position="0 0.5 -3"
+      align="center"
+      color="black"
+      width="4">
+    </a-text>
+
+    <!-- Ground -->
+    <a-plane 
+      rotation="-90 0 0" 
+      width="10" 
+      height="10" 
+      color="#7BC8A4">
+    </a-plane>
+
+    <!-- Camera -->
+    <a-entity camera position="0 1.6 0"></a-entity>
+
+  </a-scene>
+
+</body>
+</html>

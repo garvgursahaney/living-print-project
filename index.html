@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Living Print AR - Human Heart</title>
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+
+  <!-- AR.js -->
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+
+  <!-- Custom JS -->
+  <script src="js/script.js"></script>
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+
+  <a-scene embedded arjs>
+
+    <!-- Marker -->
+    <a-marker preset="hiro">
+
+      <!-- 3D Heart Model -->
+      <a-entity 
+        gltf-model="assets/models/heart.glb"
+        scale="0.4 0.4 0.4"
+        position="0 0.5 0"
+        rotation="0 180 0"
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+      </a-entity>
+
+      <!-- Title Text -->
+      <a-text 
+        value="Human Heart"
+        position="0 1.2 0"
+        align="center"
+        color="red">
+      </a-text>
+
+      <!-- Audio -->
+      <a-entity 
+        sound="src: url(assets/audio/explanation.mp3); autoplay: false;">
+      </a-entity>
+
+    </a-marker>
+
+    <!-- Camera -->
+    <a-entity camera></a-entity>
+
+  </a-scene>
+
+</body>
+</html>
