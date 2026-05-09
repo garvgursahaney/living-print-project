@@ -1,61 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Living Print VR - Human Heart</title>
 
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      background: #0d0f16;
+    }
+
+    .vr-overlay {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      max-width: min(90vw, 320px);
+    }
+
+    .vr-overlay a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #111;
+      background: #f2f2f2;
+      text-decoration: none;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="vr-overlay">
+    <strong>VR Mode</strong><br>
+    Use mouse/touch to look around
+    <br>
+    <a href="index.html">Back to AR Page</a>
+  </div>
 
   <a-scene>
+    <a-sky color="#dce7f5"></a-sky>
 
-    <!-- Background -->
-    <a-sky color="#ECECEC"></a-sky>
+    <!-- Balanced lighting for model visibility -->
+    <a-light type="ambient" color="#ffffff" intensity="0.8"></a-light>
+    <a-light type="directional" color="#ffffff" intensity="0.8" position="2 4 2"></a-light>
+    <a-light type="point" color="#ffd4d4" intensity="0.5" position="-2 2 -2"></a-light>
 
-    <!-- Lighting -->
-    <a-light type="ambient" intensity="1"></a-light>
-    <a-light type="directional" position="2 4 2"></a-light>
-
-    <!-- Rotating Heart -->
-    <a-entity 
-      gltf-model="assets/models/heart.glb"
-      position="0 1.5 -3"
-      scale="1 1 1"
-      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
-    </a-entity>
-
-    <!-- Title -->
-    <a-text 
+    <!-- Title and description for learning context -->
+    <a-text
       value="Human Heart (VR Learning)"
-      position="0 2.5 -3"
+      position="0 2.6 -3"
       align="center"
-      color="black">
-    </a-text>
+      color="#1e1e1e"
+      width="5"
+    ></a-text>
 
-    <!-- Description -->
-    <a-text 
+    <a-text
       value="The heart pumps blood throughout the body"
-      position="0 0.5 -3"
+      position="0 2.3 -3"
       align="center"
-      color="black"
-      width="4">
-    </a-text>
+      color="#2f2f2f"
+      width="5"
+    ></a-text>
 
-    <!-- Ground -->
-    <a-plane 
-      rotation="-90 0 0" 
-      width="10" 
-      height="10" 
-      color="#7BC8A4">
-    </a-plane>
+    <a-text
+      value="Use mouse/touch to look around"
+      position="0 2.05 -3"
+      align="center"
+      color="#333"
+      width="4"
+    ></a-text>
 
-    <!-- Camera -->
-    <a-entity camera position="0 1.6 0"></a-entity>
+    <!-- Heart model with a simple rotation animation -->
+    <a-entity
+      gltf-model="assets/models/heart.glb"
+      position="0 1.25 -3"
+      scale="0.95 0.95 0.95"
+      rotation="0 0 0"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear"
+    ></a-entity>
 
+    <!-- Lightweight ground -->
+    <a-plane
+      rotation="-90 0 0"
+      width="14"
+      height="14"
+      color="#a9d5ba"
+      position="0 0 -3"
+    ></a-plane>
+
+    <a-entity camera look-controls wasd-controls position="0 1.6 0"></a-entity>
   </a-scene>
-
 </body>
 </html>
