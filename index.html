@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Living Print AR - Human Heart</title>
 
   <!-- A-Frame -->
@@ -10,45 +11,152 @@
   <!-- AR.js -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 
-  <!-- Custom JS -->
-  <script src="js/script.js"></script>
+  <!-- Custom JavaScript -->
+  <script src="js/script.js" defer></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #000;
+    }
+
+    /* Simple control panel for a clear professor demo */
+    .overlay-panel {
+      position: fixed;
+      left: 12px;
+      bottom: 12px;
+      z-index: 999;
+      width: min(92vw, 340px);
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    .overlay-panel h1 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    .overlay-panel p {
+      margin: 0 0 10px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .overlay-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .overlay-actions button,
+    .overlay-actions a {
+      border: 0;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #111;
+      background: #f2f2f2;
+    }
+
+    .overlay-actions button:hover,
+    .overlay-actions a:hover {
+      background: #dcdcdc;
+    }
+  </style>
 </head>
 
-<body style="margin: 0; overflow: hidden;">
+<body>
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    renderer="logarithmicDepthBuffer: true"
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+  >
+    <a-assets>
+      <a-asset-item id="heart-model" src="assets/models/heart.glb"></a-asset-item>
 
-  <a-scene embedded arjs>
+      <!-- Video used inside AR (starts only on button click) -->
+      <video
+        id="heart-video"
+        src="assets/videos/heart.mp4"
+        preload="auto"
+        playsinline
+        webkit-playsinline
+        crossorigin="anonymous"
+      ></video>
+    </a-assets>
 
-    <!-- Marker -->
-    <a-marker preset="hiro">
-
+    <!-- Hiro marker with events enabled for markerFound/markerLost -->
+    <a-marker
+      id="hiro-marker"
+      preset="hiro"
+      emitevents="true"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance="0.01"
+      smoothThreshold="5"
+    >
       <!-- 3D Heart Model -->
-      <a-entity 
-        gltf-model="assets/models/heart.glb"
-        scale="0.4 0.4 0.4"
-        position="0 0.5 0"
+      <a-entity
+        gltf-model="#heart-model"
+        position="0 0.45 0"
         rotation="0 180 0"
-        animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
-      </a-entity>
+        scale="0.4 0.4 0.4"
+      ></a-entity>
 
-      <!-- Title Text -->
-      <a-text 
+      <!-- Demo-friendly title text -->
+      <a-text
         value="Human Heart"
-        position="0 1.2 0"
+        position="0 1.15 0"
         align="center"
-        color="red">
-      </a-text>
+        color="#d32f2f"
+        width="3"
+      ></a-text>
 
-      <!-- Audio -->
-      <a-entity 
-        sound="src: url(assets/audio/explanation.mp3); autoplay: false;">
-      </a-entity>
+      <!-- Required educational text -->
+      <a-text
+        value="The heart pumps blood throughout the body"
+        position="0 0.95 0"
+        align="center"
+        color="#1b1b1b"
+        width="3.6"
+      ></a-text>
 
+      <!-- Video panel near marker (small enough for screen recording) -->
+      <a-video
+        id="heart-video-plane"
+        src="#heart-video"
+        position="0.6 0.5 0"
+        rotation="0 -35 0"
+        width="0.7"
+        height="0.4"
+      ></a-video>
     </a-marker>
 
-    <!-- Camera -->
     <a-entity camera></a-entity>
-
   </a-scene>
 
+  <!-- HTML audio for reliable button-controlled playback -->
+  <audio id="explanation-audio" src="assets/audio/explanation.mp3" preload="auto"></audio>
+
+  <!-- Overlay controls -->
+  <div class="overlay-panel">
+    <h1>Living Print AR - Human Heart</h1>
+    <p id="status-text">Show the Hiro marker to start AR</p>
+
+    <div class="overlay-actions">
+      <button id="play-audio-btn" type="button">Play Audio</button>
+      <button id="toggle-video-btn" type="button">Play Video</button>
+      <a href="vr.html" target="_blank" rel="noopener noreferrer">Open VR Scene</a>
+    </div>
+  </div>
 </body>
 </html>
